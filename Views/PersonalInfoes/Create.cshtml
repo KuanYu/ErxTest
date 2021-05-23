@@ -1,0 +1,143 @@
+﻿@model ErxTest.Models.PersonalInfo
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<h1>Create</h1>*@
+
+<h4>Create: Personal Information</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                 <select asp-for="Title" name="Title" id="Title" class="form-control" style="width:100px;">
+                    <option value="Mr">Mr.</option>
+                    <option value="Ms">Ms.</option>
+                    <option value="Mrs">Mrs.</option>
+                  </select>
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BirthDate" class="control-label"></label>
+                <input asp-for="BirthDate" class="form-control" />
+                <span asp-validation-for="BirthDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Country" class="control-label"></label>
+                <select asp-for="Country" class="form-control" asp-items="@ViewBag.Countries" id="selCountries"></select>
+                <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressHome" class="control-label"></label>
+                <textarea asp-for="AddressHome" type="text" class="form-control"></textarea>
+                <span asp-validation-for="AddressHome" class="text-danger"></span>
+               
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressWork" class="control-label"></label>
+                <textarea asp-for="AddressWork" type="text" class="form-control"></textarea>
+                <span asp-validation-for="AddressWork" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BusinessTypeId" class="control-label">Business Type</label>
+                <select asp-for="BusinessTypeId" class="form-control" asp-items="@ViewBag.BusinessTypes"></select>
+                <span asp-validation-for="BusinessTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Occupation" class="control-label"></label>
+                <input asp-for="Occupation" class="form-control" />
+                <span asp-validation-for="Occupation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <button type="button" class="btn btn-light" onclick="gobackToHomePage()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script type="text/javascript">
+    
+function gobackToHomePage(){
+    window.location.href = "/";
+}
+
+var selCountries = document.getElementById("selCountries"); // Get the select tag.
+
+// You can get the selected country.
+selCountries.onchange = function() {
+    if(this.value == "Cambodia" || this.value == "Myanmar" || this.value == "Pakistan"){
+        alert("The Questionnaire Is Done!");
+        document.location.href="/";
+    }
+};
+
+/*(function() {
+  var newXHR;
+
+  function sendXHR(options) { // Helper function.
+    newXHR = new XMLHttpRequest() || new ActiveXObject("Microsoft.XMLHTTP");
+    if (options.sendJSON === true) {
+      options.contentType = "application/json; charset=utf-8";
+      options.data = JSON.stringify(options.data);
+    } else {
+      options.contentType = "application/x-www-form-urlencoded";
+    }
+    newXHR.open(options.type, options.url, options.async || true);
+    newXHR.setRequestHeader("Content-Type", options.contentType);
+    newXHR.send((options.type == "POST") ? options.data : null);
+    newXHR.onreadystatechange = options.callback;
+    return newXHR;
+  }
+
+  sendXHR({
+    type: "GET",
+    url: "https://restcountries.eu/rest/v1/all",
+    callback: function() {
+      if (newXHR.readyState === 4 && newXHR.status === 200) {
+        var data = JSON.parse(newXHR.response);
+
+        var selCountries = document.getElementById("selCountries"); // Get the select tag.
+
+        // You can get the selected country.
+        selCountries.onchange = function() {
+            if(this.value == "Cambodia" || this.value == "Myanmar" || this.value == "Pakistan"){
+                alert("The Questionnaire Is Done!");
+                document.location.href="/";
+            }
+        };
+
+        var option;
+
+        for (var i = 0; i < data.length; i++) { // For every country make an option tag.
+          option = document.createElement("option");
+          selCountries.options.add(option, 0);
+          selCountries.options[0].value = data[i].name; // Country name from the index «i» of the data array.
+          selCountries.options[0].innerText = data[i].name;
+          selCountries.appendChild(option); // Append the option tag to the select tag.
+        }
+      }
+    }
+  });
+})();*/
+
+</script>
